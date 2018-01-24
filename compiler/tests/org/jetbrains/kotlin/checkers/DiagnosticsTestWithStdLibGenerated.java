@@ -1374,6 +1374,12 @@ public class DiagnosticsTestWithStdLibGenerated extends AbstractDiagnosticsTestW
             doTest(fileName);
         }
 
+        @TestMetadata("suspendLambda.kt")
+        public void testSuspendLambda() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/diagnostics/testsWithStdLib/coroutines/suspendLambda.kt");
+            doTest(fileName);
+        }
+
         @TestMetadata("suspendOverridability.kt")
         public void testSuspendOverridability() throws Exception {
             String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/diagnostics/testsWithStdLib/coroutines/suspendOverridability.kt");
