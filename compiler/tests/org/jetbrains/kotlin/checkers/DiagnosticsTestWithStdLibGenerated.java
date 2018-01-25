@@ -1308,6 +1308,12 @@ public class DiagnosticsTestWithStdLibGenerated extends AbstractDiagnosticsTestW
             doTest(fileName);
         }
 
+        @TestMetadata("modifierFormForNonBuiltInSuspend.kt")
+        public void testModifierFormForNonBuiltInSuspend() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/diagnostics/testsWithStdLib/coroutines/modifierFormForNonBuiltInSuspend.kt");
+            doTest(fileName);
+        }
+
         @TestMetadata("noDefaultCoroutineImports.kt")
         public void testNoDefaultCoroutineImports() throws Exception {
             String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/diagnostics/testsWithStdLib/coroutines/noDefaultCoroutineImports.kt");
@@ -1317,6 +1323,18 @@ public class DiagnosticsTestWithStdLibGenerated extends AbstractDiagnosticsTestW
         @TestMetadata("nonLocalSuspension.kt")
         public void testNonLocalSuspension() throws Exception {
             String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/diagnostics/testsWithStdLib/coroutines/nonLocalSuspension.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("nonModifierFormForBuiltIn.kt")
+        public void testNonModifierFormForBuiltIn() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/diagnostics/testsWithStdLib/coroutines/nonModifierFormForBuiltIn.kt");
+            doTest(fileName);
+        }
+
+        @TestMetadata("nonModifierFormForBuiltInRenameOnImport.kt")
+        public void testNonModifierFormForBuiltInRenameOnImport() throws Exception {
+            String fileName = KotlinTestUtils.navigationMetadata("compiler/testData/diagnostics/testsWithStdLib/coroutines/nonModifierFormForBuiltInRenameOnImport.kt");
             doTest(fileName);
         }
 
