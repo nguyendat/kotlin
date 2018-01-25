@@ -195,13 +195,19 @@ class OperatorExpressionGenerator(statementGenerator: StatementGenerator) : Stat
     }
 
     private fun generateEqualityOperator(expression: KtBinaryExpression, irOperator: IrStatementOrigin): IrExpression {
-        val irArgument0 = statementGenerator.generateExpression(expression.left!!)
-        val irArgument1 = statementGenerator.generateExpression(expression.right!!)
+        val ktLeft = expression.left!!
+        val ktRight = expression.right!!
+
+        val irArgument0 = statementGenerator.generateExpression(ktLeft)
+        val irArgument1 = statementGenerator.generateExpression(ktRight)
+
+        val eqeqSymbol = context.remapCalleeByFloatingPointComparisonRules(getResolvedCall(expression)!!)
+                ?: context.irBuiltIns.eqeqSymbol
 
         val irEquals = IrBinaryPrimitiveImpl(
             expression.startOffset, expression.endOffset,
             irOperator,
-            context.irBuiltIns.eqeqSymbol,
+            eqeqSymbol,
             irArgument0, irArgument1
         )
 
@@ -217,7 +223,6 @@ class OperatorExpressionGenerator(statementGenerator: StatementGenerator) : Stat
             else ->
                 throw AssertionError("Unexpected equality operator $irOperator")
         }
-
     }
 
     private fun generateComparisonOperator(expression: KtBinaryExpression, origin: IrStatementOrigin): IrExpression {
