@@ -29,7 +29,7 @@ import kotlin.internal.InlineOnly
  */
 @SinceKotlin("1.1")
 @Suppress("UNCHECKED_CAST")
-fun <R, T> (suspend R.() -> T).startCoroutine(
+public fun <R, T> (suspend R.() -> T).startCoroutine(
         receiver: R,
         completion: Continuation<T>
 ) {
@@ -43,7 +43,7 @@ fun <R, T> (suspend R.() -> T).startCoroutine(
  */
 @SinceKotlin("1.1")
 @Suppress("UNCHECKED_CAST")
-fun <T> (suspend  () -> T).startCoroutine(
+public fun <T> (suspend  () -> T).startCoroutine(
         completion: Continuation<T>
 ) {
     createCoroutineUnchecked(completion).resume(Unit)
@@ -59,7 +59,7 @@ fun <T> (suspend  () -> T).startCoroutine(
  */
 @SinceKotlin("1.1")
 @Suppress("UNCHECKED_CAST")
-fun <R, T> (suspend R.() -> T).createCoroutine(
+public fun <R, T> (suspend R.() -> T).createCoroutine(
         receiver: R,
         completion: Continuation<T>
 ): Continuation<Unit> = SafeContinuation(createCoroutineUnchecked(receiver, completion), COROUTINE_SUSPENDED)
@@ -74,7 +74,7 @@ fun <R, T> (suspend R.() -> T).createCoroutine(
  */
 @SinceKotlin("1.1")
 @Suppress("UNCHECKED_CAST")
-fun <T> (suspend () -> T).createCoroutine(
+public fun <T> (suspend () -> T).createCoroutine(
         completion: Continuation<T>
 ): Continuation<Unit> = SafeContinuation(createCoroutineUnchecked(completion), COROUTINE_SUSPENDED)
 
@@ -105,7 +105,7 @@ public suspend inline fun <T> suspendCoroutine(crossinline block: (Continuation<
 @SinceKotlin("1.2")
 @Suppress("WRONG_MODIFIER_TARGET")
 @InlineOnly
-suspend inline val coroutineContext: CoroutineContext
+public suspend inline val coroutineContext: CoroutineContext
     get() {
         throw NotImplementedError("Implemented as intrinsic")
     }
