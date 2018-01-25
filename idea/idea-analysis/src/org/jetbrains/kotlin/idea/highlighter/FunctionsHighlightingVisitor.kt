@@ -28,9 +28,11 @@ import org.jetbrains.kotlin.psi.*
 import org.jetbrains.kotlin.resolve.BindingContext
 import org.jetbrains.kotlin.resolve.DescriptorUtils
 import org.jetbrains.kotlin.resolve.calls.callUtil.getResolvedCall
+import org.jetbrains.kotlin.resolve.calls.checkers.LambdaWithSuspendModifierCallChecker
 import org.jetbrains.kotlin.resolve.calls.model.ResolvedCall
 import org.jetbrains.kotlin.resolve.calls.model.VariableAsFunctionResolvedCall
 import org.jetbrains.kotlin.resolve.calls.tasks.isDynamic
+import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameOrNull
 
 internal class FunctionsHighlightingVisitor(holder: AnnotationHolder, bindingContext: BindingContext) :
         AfterAnalysisHighlightingVisitor(holder, bindingContext) {
@@ -74,6 +76,11 @@ internal class FunctionsHighlightingVisitor(holder: AnnotationHolder, bindingCon
         val calleeDescriptor = resolvedCall.resultingDescriptor
 
         if (applyHighlighterExtensions(callee, calleeDescriptor)) return
+
+        if (calleeDescriptor.fqNameOrNull() ==
+            LambdaWithSuspendModifierCallChecker.KOTLIN_SUSPEND_BUILT_IN_FUNCTION_FQ_NAME) {
+            return highlightName(callee, KEYWORD)
+        }
 
         if (calleeDescriptor.isDynamic()) {
             highlightName(callee, DYNAMIC_FUNCTION_CALL)
