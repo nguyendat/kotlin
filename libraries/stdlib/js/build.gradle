@@ -14,7 +14,7 @@ def builtinsSrcDir = "${buildDir}/builtin-sources"
 def builtinsSrcDir2 = "${buildDir}/builtin-sources-for-builtins"
 def commonSrcDir = "${projectDir}/../common/src/build/common-sources"
 
-def commonTestSrcDir = "${buildDir}/common-test-sources"
+//def commonTestSrcDir = "${buildDir}/common-test-sources"
 def builtinsDir = "${rootDir}/core/builtins"
 def jsLibrariesDir = "${rootDir}/js/js.libraries"
 def jsSrcDir = "${jsLibrariesDir}/src"
@@ -49,7 +49,7 @@ sourceSets {
 
     test {
         kotlin {
-            srcDir commonTestSrcDir
+//            srcDir commonTestSrcDir
             srcDir jsTestSrcDir
         }
     }
@@ -71,7 +71,7 @@ idea {
 }
 
 //createPreprocessorTask(project, "Main", "${projectDir}/../src/kotlin", commonSrcDir)
-createPreprocessorTask(project, "Test", "${projectDir}/../test", commonTestSrcDir)
+//createPreprocessorTask(project, "Test", "${projectDir}/../test", commonTestSrcDir)
 
 task prepareComparableSource(type: Copy) {
     doFirst {
@@ -144,9 +144,10 @@ compileKotlin2Js {
 }
 
 compileTestKotlin2Js {
-    dependsOn preprocessSourcesTest
+    dependsOn(":kotlin-stdlib-common:preprocessSourcesTest")
     kotlinOptions {
         moduleKind = "plain"
+        freeCompilerArgs += ["-Xmulti-platform"]
     }
 }
 
