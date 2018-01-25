@@ -40,7 +40,7 @@ import kotlin.coroutines.experimental.*
 @SinceKotlin("1.1")
 @kotlin.internal.InlineOnly
 @Suppress("UNUSED_PARAMETER")
-public inline suspend fun <T> suspendCoroutineOrReturn(crossinline block: (Continuation<T>) -> Any?): T =
+public suspend inline fun <T> suspendCoroutineOrReturn(crossinline block: (Continuation<T>) -> Any?): T =
         suspendCoroutineUninterceptedOrReturn { cont -> block(cont.intercepted()) }
 
 /**
@@ -51,7 +51,7 @@ public inline suspend fun <T> suspendCoroutineOrReturn(crossinline block: (Conti
  */
 @SinceKotlin("1.2")
 @kotlin.internal.InlineOnly
-public inline suspend fun <T> suspendCoroutineUninterceptedOrReturn(crossinline block: (Continuation<T>) -> Any?): T =
+public suspend inline fun <T> suspendCoroutineUninterceptedOrReturn(crossinline block: (Continuation<T>) -> Any?): T =
         throw NotImplementedError("Implementation of suspendCoroutineUninterceptedOrReturn is intrinsic")
 
 /**
@@ -59,7 +59,7 @@ public inline suspend fun <T> suspendCoroutineUninterceptedOrReturn(crossinline 
  */
 @SinceKotlin("1.2")
 @kotlin.internal.InlineOnly
-public inline fun <T> Continuation<T>.intercepted(): Continuation<T> =
+inline fun <T> Continuation<T>.intercepted(): Continuation<T> =
         throw NotImplementedError("Implementation of intercepted is intrinsic")
 
 /**
@@ -74,10 +74,10 @@ public inline fun <T> Continuation<T>.intercepted(): Continuation<T> =
 @Suppress("WRONG_MODIFIER_TARGET")
 @Deprecated(
     "Use kotlin.coroutines.experimental.coroutineContext instead",
-    ReplaceWith("kotlin.coroutines.experimental.coroutineContext"),
+    ReplaceWith("coroutineContext", "kotlin.coroutines.experimental.coroutineContext"),
     DeprecationLevel.WARNING
 )
-public suspend inline val coroutineContext: CoroutineContext
+suspend inline val coroutineContext: CoroutineContext
     get() {
         throw NotImplementedError("Implemented as intrinsic")
     }
@@ -87,7 +87,7 @@ public suspend inline val coroutineContext: CoroutineContext
  * the execution was suspended and will not return any result immediately.
  */
 @SinceKotlin("1.1")
-public val COROUTINE_SUSPENDED: Any = Any()
+val COROUTINE_SUSPENDED: Any = Any()
 
 // JVM declarations
 
@@ -103,7 +103,7 @@ public val COROUTINE_SUSPENDED: Any = Any()
  */
 @SinceKotlin("1.1")
 @kotlin.jvm.JvmVersion
-public fun <T> (suspend () -> T).createCoroutineUnchecked(
+fun <T> (suspend () -> T).createCoroutineUnchecked(
         completion: Continuation<T>
 ): Continuation<Unit> =
         if (this !is kotlin.coroutines.experimental.jvm.internal.CoroutineImpl)
@@ -126,7 +126,7 @@ public fun <T> (suspend () -> T).createCoroutineUnchecked(
  */
 @SinceKotlin("1.1")
 @kotlin.jvm.JvmVersion
-public fun <R, T> (suspend R.() -> T).createCoroutineUnchecked(
+fun <R, T> (suspend R.() -> T).createCoroutineUnchecked(
         receiver: R,
         completion: Continuation<T>
 ): Continuation<Unit> =

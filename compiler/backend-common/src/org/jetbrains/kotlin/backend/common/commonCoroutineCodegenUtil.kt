@@ -22,17 +22,15 @@ import org.jetbrains.kotlin.descriptors.PropertyGetterDescriptor
 import org.jetbrains.kotlin.incremental.components.NoLookupLocation
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.DescriptorEquivalenceForOverrides
-import org.jetbrains.kotlin.resolve.DescriptorUtils
+import org.jetbrains.kotlin.resolve.DescriptorUtils.COROUTINES_INTRINSICS_PACKAGE_FQ_NAME
+import org.jetbrains.kotlin.resolve.calls.checkers.COROUTINE_CONTEXT_1_2_20_FQ_NAME
+import org.jetbrains.kotlin.resolve.calls.checkers.COROUTINE_CONTEXT_FQ_NAME
 import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameSafe
 import org.jetbrains.kotlin.resolve.descriptorUtil.module
 
 val SUSPEND_COROUTINE_OR_RETURN_NAME = Name.identifier("suspendCoroutineOrReturn")
 val INTERCEPTED_NAME = Name.identifier("intercepted")
 val COROUTINE_SUSPENDED_NAME = Name.identifier("COROUTINE_SUSPENDED")
-
-val COROUTINES_INTRINSICS_PACKAGE_FQ_NAME = DescriptorUtils.COROUTINES_PACKAGE_FQ_NAME.child(Name.identifier("intrinsics"))
-val COROUTINE_CONTEXT_1_2_20_FQ_NAME = COROUTINES_INTRINSICS_PACKAGE_FQ_NAME.child(Name.identifier("coroutineContext"))
-val COROUTINE_CONTEXT_FQ_NAME = DescriptorUtils.COROUTINES_PACKAGE_FQ_NAME.child(Name.identifier("coroutineContext"))
 
 val SUSPEND_COROUTINE_UNINTERCEPTED_OR_RETURN_NAME = Name.identifier("suspendCoroutineUninterceptedOrReturn")
 

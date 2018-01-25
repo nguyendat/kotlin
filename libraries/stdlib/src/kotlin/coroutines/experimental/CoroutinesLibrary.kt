@@ -18,8 +18,9 @@
 package kotlin.coroutines.experimental
 
 import kotlin.coroutines.experimental.intrinsics.COROUTINE_SUSPENDED
-import kotlin.coroutines.experimental.intrinsics.suspendCoroutineOrReturn
 import kotlin.coroutines.experimental.intrinsics.createCoroutineUnchecked
+import kotlin.coroutines.experimental.intrinsics.suspendCoroutineOrReturn
+import kotlin.internal.InlineOnly
 
 /**
  * Starts coroutine with receiver type [R] and result type [T].
@@ -28,7 +29,7 @@ import kotlin.coroutines.experimental.intrinsics.createCoroutineUnchecked
  */
 @SinceKotlin("1.1")
 @Suppress("UNCHECKED_CAST")
-public fun <R, T> (suspend R.() -> T).startCoroutine(
+fun <R, T> (suspend R.() -> T).startCoroutine(
         receiver: R,
         completion: Continuation<T>
 ) {
@@ -42,7 +43,7 @@ public fun <R, T> (suspend R.() -> T).startCoroutine(
  */
 @SinceKotlin("1.1")
 @Suppress("UNCHECKED_CAST")
-public fun <T> (suspend  () -> T).startCoroutine(
+fun <T> (suspend  () -> T).startCoroutine(
         completion: Continuation<T>
 ) {
     createCoroutineUnchecked(completion).resume(Unit)
@@ -58,7 +59,7 @@ public fun <T> (suspend  () -> T).startCoroutine(
  */
 @SinceKotlin("1.1")
 @Suppress("UNCHECKED_CAST")
-public fun <R, T> (suspend R.() -> T).createCoroutine(
+fun <R, T> (suspend R.() -> T).createCoroutine(
         receiver: R,
         completion: Continuation<T>
 ): Continuation<Unit> = SafeContinuation(createCoroutineUnchecked(receiver, completion), COROUTINE_SUSPENDED)
@@ -73,7 +74,7 @@ public fun <R, T> (suspend R.() -> T).createCoroutine(
  */
 @SinceKotlin("1.1")
 @Suppress("UNCHECKED_CAST")
-public fun <T> (suspend () -> T).createCoroutine(
+fun <T> (suspend () -> T).createCoroutine(
         completion: Continuation<T>
 ): Continuation<Unit> = SafeContinuation(createCoroutineUnchecked(completion), COROUTINE_SUSPENDED)
 
@@ -86,7 +87,7 @@ public fun <T> (suspend () -> T).createCoroutine(
  * from a different thread of execution. Repeated invocation of any resume function produces [IllegalStateException].
  */
 @SinceKotlin("1.1")
-public inline suspend fun <T> suspendCoroutine(crossinline block: (Continuation<T>) -> Unit): T =
+public suspend inline fun <T> suspendCoroutine(crossinline block: (Continuation<T>) -> Unit): T =
         suspendCoroutineOrReturn { c: Continuation<T> ->
             val safe = SafeContinuation(c)
             block(safe)
@@ -103,7 +104,8 @@ public inline suspend fun <T> suspendCoroutine(crossinline block: (Continuation<
  */
 @SinceKotlin("1.2")
 @Suppress("WRONG_MODIFIER_TARGET")
-public suspend inline val coroutineContext: CoroutineContext
+@InlineOnly
+suspend inline val coroutineContext: CoroutineContext
     get() {
         throw NotImplementedError("Implemented as intrinsic")
     }

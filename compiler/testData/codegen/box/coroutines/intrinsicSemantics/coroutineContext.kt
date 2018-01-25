@@ -2,6 +2,7 @@
 // WITH_COROUTINES
 import helpers.*
 import kotlin.coroutines.experimental.*
+import kotlin.coroutines.experimental.coroutineContext
 import kotlin.coroutines.experimental.intrinsics.*
 import kotlin.test.assertEquals
 
@@ -12,8 +13,8 @@ suspend fun suspendHereOld() =
         "OK"
 
 suspend fun suspendHereNew() =
-    if (kotlin.coroutines.experimental.coroutineContext != EmptyCoroutineContext)
-        "${kotlin.coroutines.experimental.coroutineContext} != $EmptyCoroutineContext"
+    if (coroutineContext != EmptyCoroutineContext)
+        "${coroutineContext} != $EmptyCoroutineContext"
     else
         "OK"
 
@@ -24,8 +25,8 @@ suspend fun multipleArgsOld(a: Any, b: Any, c: Any) =
         "OK"
 
 suspend fun multipleArgsNew(a: Any, b: Any, c: Any) =
-    if (kotlin.coroutines.experimental.coroutineContext != EmptyCoroutineContext)
-        "${kotlin.coroutines.experimental.coroutineContext} != $EmptyCoroutineContext"
+    if (coroutineContext != EmptyCoroutineContext)
+        "${coroutineContext} != $EmptyCoroutineContext"
     else
         "OK"
 
@@ -77,8 +78,8 @@ fun box(): String {
         return "fail 5 $res"
     }
     res = builder {
-        if (kotlin.coroutines.experimental.coroutineContext != EmptyCoroutineContext)
-            "${kotlin.coroutines.experimental.coroutineContext} != $EmptyCoroutineContext"
+        if (coroutineContext != EmptyCoroutineContext)
+            "${coroutineContext} != $EmptyCoroutineContext"
         else
             "OK"
     }
