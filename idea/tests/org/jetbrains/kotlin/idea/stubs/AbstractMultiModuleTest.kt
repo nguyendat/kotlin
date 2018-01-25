@@ -44,16 +44,21 @@ abstract class AbstractMultiModuleTest : DaemonAnalyzerTestCase() {
         VfsRootAccess.allowRootAccess(KotlinTestUtils.getHomeDirectory())
     }
 
-    protected fun module(name: String, jdk: TestJdkKind = TestJdkKind.MOCK_JDK, hasTestRoot: Boolean = false): Module {
+    protected fun module(name: String, jdk: TestJdkKind = TestJdkKind.MOCK_JDK, hasTestRoot: Boolean = false, js: Boolean = false): Module {
         val srcDir = testDataPath + "${getTestName(true)}/$name"
-        val moduleWithSrcRootSet = createModuleFromTestData(srcDir, name, StdModuleTypes.JAVA, true)!!
+        val module = createModuleFromTestData(srcDir, name, StdModuleTypes.JAVA, true)!!
         if (hasTestRoot) {
-            setTestRoot(moduleWithSrcRootSet, name)
+            setTestRoot(module, name)
         }
 
-        ConfigLibraryUtil.configureSdk(moduleWithSrcRootSet, PluginTestCaseBase.jdk(jdk))
+        if (js) {
+            // TODO: figure out if this is still necessary
+            ConfigLibraryUtil.configureKotlinJsRuntimeAndSdk(module, PluginTestCaseBase.jdk(jdk))
+        } else {
+            ConfigLibraryUtil.configureSdk(module, PluginTestCaseBase.jdk(jdk))
+        }
 
-        return moduleWithSrcRootSet
+        return module
     }
 
     private fun setTestRoot(module: Module, name: String) {

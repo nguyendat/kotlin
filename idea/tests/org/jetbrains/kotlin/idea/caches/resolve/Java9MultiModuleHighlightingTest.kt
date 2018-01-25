@@ -32,7 +32,7 @@ class Java9MultiModuleHighlightingTest : AbstractMultiModuleHighlightingTest() {
         }
     }
 
-    private fun module(name: String): Module = super.module(name, FULL_JDK_9, false)
+    private fun module(name: String): Module = super.module(name, FULL_JDK_9, false, false)
 
     fun testSimpleModuleExportsPackage() = doTest {
         module("main").addDependency(module("dependency"))

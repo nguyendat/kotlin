@@ -18,6 +18,7 @@ package org.jetbrains.kotlin.idea.caches.resolve
 
 import com.intellij.psi.search.GlobalSearchScope
 import com.intellij.util.indexing.FileBasedIndex
+import org.jetbrains.kotlin.idea.vfilefinder.KotlinJvmModuleAnnotationsIndex
 import org.jetbrains.kotlin.idea.vfilefinder.KotlinModuleMappingIndex
 import org.jetbrains.kotlin.load.kotlin.PackagePartProvider
 import org.jetbrains.kotlin.load.kotlin.PackageParts
@@ -34,7 +35,7 @@ class IDEPackagePartProvider(val scope: GlobalSearchScope) : PackagePartProvider
     private fun getPackageParts(packageFqName: String): MutableList<PackageParts> =
             FileBasedIndex.getInstance().getValues(KotlinModuleMappingIndex.KEY, packageFqName, scope)
 
-    override fun getAnnotationsOnBinaryModule(moduleName: String): List<ClassId> {
-        throw UnsupportedOperationException()
-    }
+    // Note that in case of several modules with the same name, we return all annotations on all of them, which is probably incorrect
+    override fun getAnnotationsOnBinaryModule(moduleName: String): List<ClassId> =
+            FileBasedIndex.getInstance().getValues(KotlinJvmModuleAnnotationsIndex.KEY, moduleName, scope).flatten()
 }
