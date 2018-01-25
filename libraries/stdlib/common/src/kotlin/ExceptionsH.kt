@@ -41,12 +41,12 @@ public expect open class IndexOutOfBoundsException : RuntimeException {
     constructor(message: String?)
 }
 
-public expect open class ConcurrentModificationException : RuntimeException {
+/*public expect open class ConcurrentModificationException : RuntimeException {
     constructor()
     constructor(message: String?)
     constructor(message: String?, cause: Throwable?)
     constructor(cause: Throwable?)
-}
+}*/
 
 public expect open class UnsupportedOperationException : RuntimeException {
     constructor()
@@ -75,11 +75,12 @@ public expect open class AssertionError : Error {
     constructor(message: Any?)
 }
 
-public expect open class NoSuchElementException : Exception {
+public expect open class NoSuchElementException : RuntimeException {
     constructor()
     constructor(message: String?)
 }
 
+@Suppress("NO_ACTUAL_FOR_EXPECT") // TODO: Convert from java in JVM
 public expect open class NoWhenBranchMatchedException : RuntimeException {
     constructor()
     constructor(message: String?)
@@ -87,7 +88,7 @@ public expect open class NoWhenBranchMatchedException : RuntimeException {
     constructor(cause: Throwable?)
 }
 
-public expect open class UninitializedPropertyAccessException : RuntimeException {
+public expect class UninitializedPropertyAccessException : RuntimeException {
     constructor()
     constructor(message: String?)
     constructor(message: String?, cause: Throwable?)
