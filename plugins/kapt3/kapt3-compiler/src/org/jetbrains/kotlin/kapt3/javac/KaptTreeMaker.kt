@@ -113,17 +113,15 @@ class KaptTreeMaker(context: Context, private val kaptContext: KaptContext<*>) :
     }
 
     private inline fun String.iterateDollars(variantHandler: (outerName: String, innerName: String) -> Unit) {
-        var dollarIndex = this.indexOf('$')
-        if (dollarIndex < 0) {
-            variantHandler(this, "")
-            return
-        }
+        var dollarIndex = this.indexOf('$', startIndex = 1)
 
-        while (dollarIndex > 0 && dollarIndex < this.lastIndex) {
-            val outerName = this.take(dollarIndex)
-            val innerName = this.drop(dollarIndex + 1)
+        while (dollarIndex >= 0) {
+            if (this[dollarIndex - 1] != '.') {
+                val outerName = this.take(dollarIndex)
+                val innerName = this.drop(dollarIndex + 1)
 
-            variantHandler(outerName, innerName)
+                variantHandler(outerName, innerName)
+            }
 
             dollarIndex = this.indexOf('$', startIndex = dollarIndex + 1)
         }
