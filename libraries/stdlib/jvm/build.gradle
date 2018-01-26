@@ -76,6 +76,10 @@ compileKotlin {
     }
 }
 
+compileTestKotlin {
+    dependsOn(":kotlin-stdlib-common:preprocessSourcesTest")
+}
+
 
 jar {
     manifestAttributes(manifest, project, 'Main')
