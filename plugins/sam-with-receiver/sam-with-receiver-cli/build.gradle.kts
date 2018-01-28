@@ -17,7 +17,7 @@ dependencies {
     testCompile(project(":compiler:tests-common"))
     testCompile(projectTests(":compiler:tests-common"))
     testCompile(commonDep("junit:junit"))
-    testCompile(intellijCoreDep()) { includeJars("intellij-core") }
+    testCompileOnly(intellijCoreDep()) { includeJars("intellij-core") }
     testRuntime(intellijDep())
 }
 
